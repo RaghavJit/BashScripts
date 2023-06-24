@@ -7,7 +7,7 @@ List of scripts:
 2. [nts](./bookmark_command/)
 
 ## Setup
-### To use these commands globally as commands, paths to the bash scripts must be added to the .bashrc file.
+### To use these scripts globally as commands, paths to the bash scripts must be added to the .bashrc file.
 
 1. Go to ~/ (home directory).
 1. Open .bashrc file with admin privilages using sudo or su.
