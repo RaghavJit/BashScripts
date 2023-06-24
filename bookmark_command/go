@@ -1,0 +1,21 @@
+#! /usr/bin/bash
+
+path_data=$(cat /<path to the repo>/MyScripts/path_data.txt) 
+BM_data=$(cat /<path to the repo>/MyScripts/BM_data.txt)
+
+n=1;
+
+if [[ $1 != 'new' ]]; then
+    for i in ${BM_data[@]}; do
+        if [[ $1 == $i ]]; then
+            cd $(cat /<path to the repo>/MyScripts/path_data.txt | sed -n ''$n'p');
+            ls;
+            break;
+        fi  
+        n=$((n+1))
+    done
+else
+    echo 'new book-mark set';
+    echo $2 >> /<path to the repo>/MyScripts/BM_data.txt;
+    echo $(pwd) >> /<path to the repo>/MyScripts/path_data.txt;
+fi  

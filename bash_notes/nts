@@ -1,0 +1,117 @@
+#!/bin/bash
+
+Title=''
+Message=''
+path='/<path to the repo>/MyScripts/Notes'
+
+if [[ $1 == 'new' ]]; then
+
+    while [[ $# -gt 0 ]]; do
+        case $2 in
+            -t)
+                shift 
+                Title="$2"
+                ;;
+            -m)
+                shift
+                Message="$2"
+                ;;
+        esac
+        shift
+    done
+
+    if [[ ($Title != '') && ($Message != '')]]; then
+        echo $Message > $path/$Title
+    fi
+
+    if [[ $Title == '' ]]; then
+        echo Enter Title for your note:
+        read Title
+    fi
+
+    if [[ $Message == '' ]]; then
+        echo Open editor[y/N]:
+        read choice
+        if [[ $choice == 'y' ]]; then
+            vi $path/$Title
+        elif [[ $choice == 'N' ]]; then
+            read Message
+            echo $Message > $path/$Title
+        fi
+    fi
+
+    echo Note saved successfully
+fi
+
+if [[ $1 == 'rm' ]]; then
+    while [[ $# -gt 0 ]]; do
+        case $2 in
+            -t)
+                shift 
+                Title="$2"
+                rm $path/$Title
+                echo $Title deleted!
+                ;;
+            -a)
+                rm $path/*
+                echo Cleared all $path
+        esac
+        shift
+    done
+fi
+
+if [[ $1 == 'edit' ]]; then
+    while [[ $# -gt 0 ]]; do
+        case $2 in
+            -t)
+                shift 
+                Title="$2"
+                ;;
+            -m)
+                shift
+                Message="$2"
+                ;;
+        esac
+        shift
+    done
+
+    if [[ ($Title != '') && ($Message != '')]]; then
+        echo $Message > $path/$Title
+    fi
+
+    if [[ $Title == '' ]]; then
+        echo Enter Title of the note:
+        read Title
+    fi
+
+    if [[ $Message == '' ]]; then
+        echo Open editor[y/N]:
+        read choice
+        if [[ $choice == 'y' ]]; then
+            vi $path/$Title
+        elif [[ $choice == 'N' ]]; then
+            read Message
+            echo $Message > $path/$Title
+        fi
+    fi
+
+    echo Note edited successfully
+fi
+
+if [[ $1 == 'show' ]]; then
+    while [[ $# -gt 0 ]]; do
+        case $2 in
+            -t)
+                shift 
+                Title="$2"
+                cat $path/$Title
+                ;;
+            -l)
+                ls $path/ -1
+                ;;
+            -ll)
+                ls $path/ -l
+        esac
+        shift
+    done
+fi
