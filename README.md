@@ -7,17 +7,17 @@ List of scripts:
 2. [nts](./bookmark_command/)
 
 ## Setup
-### To use these commands globally as commands, paths to the bash scripts must be added to the .bashrc file.
+1. Create $HOME/.local/bin/ folder (if it doesn't exist already).
+```
+mkdir $HOME/.local/bin/
+```
+2. Make sure the folder is added to $PATH (check .bashrc/.bash_profile/.bash_login/.profile)
+```
+export PATH="$HOME/.local/bin/:$PATH"
+```
+3. Clone the repo in $HOME/.local/bin/ (directory for user binaries).
 
-1. Go to ~/ (home directory).
-1. Open .bashrc file with admin privilages using sudo or su.
-1. Go to the end of the file.
-1. Add the path of cloned repo:
-```
-export PATH="<path to cloned repo>:$PATH"
-```
-### Give executable permissions to bash files
-1. Navigate to the cloned repo and add executable permission to commands.
+4. Navigate to the cloned repo and add executable permission to commands.
 ```
 chmod +x go
 ```
@@ -31,24 +31,33 @@ chmod +x go
 ```
 alias go='. go'
 ```
-**this will stop go command form executing in a child shell**
-
+This is used when you want to load environment variables, functions, or aliases into your current shell session. It allows you to modify the current shell's environment directly without needing to create a separate subshell.
 ## Usage
 
 ### go
-This script will help you navigate to bookmarks in you bash termial, you can also set book marks.
+Helps create, delete and view path book marks in terminal.
 
 **Make sure the BM_data.txt and path_data.txt are present in the same directory as go file, and they have read/write permissions**
 
 To add a book mark 'bm' to the 'path', navigate to 'path' and execute go with 'new' option the following command:
 ```
-go new bm
+go new <bookmark>
+```
+Lists all the book marks along with their respective paths
+
+```
+go ls
+```
+Removes book mark and its path
+
+```
+go rm <bookmark>
 ```
 This will set a bookmark 'bm' to the present working director (path). To jump to 'path' simply write:
 ```
-go bm
+go <bookmark>/<path>
 ```
-Above command will take you to the 'path' and it will also list the contents of the directory by default.
+Above command will take you to the 'path' and it will also list the contents of the directory by default. To navigate to subfolders use '/<path\>'. Avoid nameing book marks as keywords as good practice, but if you are using keyword as book mark, distinction will be made on the basis of / symbol.
 
 ### nts
 This script help you create, edit, delete and view notes in bash terminal.

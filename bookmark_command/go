@@ -38,6 +38,6 @@ else
     if [[ $EXTND_PATH != $INPT ]]; then
         cd $EXTND_PATH;
     fi
-
+    ls;
 fi
 
