@@ -1,8 +1,8 @@
-#!/bin/bash
+#!/usr/bin/bash
 
 Title=''
 Message=''
-path='/<path to the repo>/MyScripts/Notes'
+path="$HOME/.local/bin/Notes/"
 
 if [[ $1 == 'new' ]]; then
 
@@ -111,6 +111,7 @@ if [[ $1 == 'show' ]]; then
                 ;;
             -ll)
                 ls $path/ -l
+                ;;
         esac
         shift
     done
