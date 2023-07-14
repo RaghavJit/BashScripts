@@ -87,3 +87,4 @@ nts show -t titleOfTheNote
 nts show -l (to view all notes)
 nts show -l (to view all notes with last modified date)
 ```
+
