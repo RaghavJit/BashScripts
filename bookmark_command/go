@@ -1,21 +1,43 @@
-#! /usr/bin/bash
+#!/usr/bin/bash
 
-path_data=$(cat /<path to the repo>/MyScripts/path_data.txt) 
-BM_data=$(cat /<path to the repo>/MyScripts/BM_data.txt)
+PATH_DATA_FILE="$HOME/.local/bin/PATH_DATA.txt";
+BM_DATA_FILE="$HOME/.local/bin/BM_DATA.txt";
+
+PATH_DATA=$(cat $PATH_DATA_FILE); 
+BM_DATA=$(cat $BM_DATA_FILE);
 
 n=1;
 
-if [[ $1 != 'new' ]]; then
-    for i in ${BM_data[@]}; do
-        if [[ $1 == $i ]]; then
-            cd $(cat /<path to the repo>/MyScripts/path_data.txt | sed -n ''$n'p');
-            ls;
-            break;
-        fi  
-        n=$((n+1))
-    done
-else
+INPT=$1;
+BOOK_MARK=${INPT%%/*};
+EXTND_PATH=${INPT#*/};
+
+if [[ $INPT == 'new' ]]; then
+
     echo 'new book-mark set';
-    echo $2 >> /<path to the repo>/MyScripts/BM_data.txt;
-    echo $(pwd) >> /<path to the repo>/MyScripts/path_data.txt;
-fi  
+    echo $2 >> $BM_DATA_FILE;
+    echo $(pwd) >> $PATH_DATA_FILE;
+
+elif [[ $INPT == 'ls' ]]; then
+    
+    for i in ${BM_DATA[@]}; do
+        echo $i $(cat $PATH_DATA_FILE | sed -n ''$n'p');
+        n=$((n+1));
+    done
+
+elif [[ $INPT == 'rm' ]]; then
+    
+    lineNumber=$(sed -n "/$2/{=;d}" $BM_DATA_FILE);
+    sed -i ''$lineNumber'd' $BM_DATA_FILE;
+    sed -i ''$lineNumber'd' $PATH_DATA_FILE;
+
+else
+    
+    lineNumber=$(sed -n "/$BOOK_MARK/{=;d}" $BM_DATA_FILE);
+    cd $(sed -n ''$lineNumber'p' $PATH_DATA_FILE);
+    if [[ $EXTND_PATH != $INPT ]]; then
+        cd $EXTND_PATH;
+    fi
+
+fi
+
