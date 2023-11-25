@@ -1,0 +1,51 @@
+#!/usr/bin/bash
+
+ADR="192.168.1."
+
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        -n)
+            shift 
+            ip_mac=$(grep ${ADR}$1 ./ADDR_DATA.txt)
+            IFS=' ' read -ra parts <<< "$ip_mac"
+            wakeonlan ${parts[1]}
+            ;;
+        -l)
+            shift
+            for adr in "$@"; do
+                ip_mac=$(grep ${ADR}$adr ./ADDR_DATA.txt)
+                IFS=' ' read -ra parts <<< "$ip_mac"
+                wakeonlan ${parts[1]}
+            done
+            ;;
+        -r)
+            shift
+            for(( adr=$1; adr<=$2; adr++ )); do
+                ip_mac=$(grep ${ADR}$adr ./ADDR_DATA.txt)
+                IFS=' ' read -ra parts <<< "$ip_mac"
+                wakeonlan ${parts[1]}
+            done
+            ;;
+        -a) 
+            shift
+            while IFS= read -r line; do
+                IFS=' ' read -ra parts <<< "$line"
+                echo ${parts[1]}
+            done < ./ADDR_DATA.txt
+            ;;
+        -h)
+            shift
+                echo Utility to wakeonlan connected devices using their ip address \(last octate\)
+                echo To turn on pc with ip address: 192.168.1.11
+                echo     rmt -n 11
+                echo To turn on 192.168.1.11 192.168.1.12 192.168.1.17: 
+                echo     rmt -l 11 12 17
+                echo To turn on all computers form 192.168.1.2 to 192.168.1.15:
+                echo     rmt -r 2 15
+                echo To turn on all devices:
+                echo     rmt -a
+            ;;
+    esac
+    shift
+done
+

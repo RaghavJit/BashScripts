@@ -4,7 +4,8 @@
 
 List of scripts:
 1. [go](./bookmark_command/)
-2. [nts](./bookmark_command/)
+2. [nts](./bash_notes/)
+3. [autowake](./autowake/)
 
 ## Setup
 1. Create $HOME/.local/bin/ folder (if it doesn't exist already).
@@ -75,6 +76,11 @@ To delete a note use:
 nts rm -t (to delete note with specific title)
 nts rm -a (to delete all notes)
 ```
+
+### rmt
+We have a bunch of computers connected to the server in CC-Lab, this script make wakeonlan easier on those PCs
+
+**Make sure to have ADDR_DATA.txt in the same directory as rmt file**
 
 To edit a note:
 ```
