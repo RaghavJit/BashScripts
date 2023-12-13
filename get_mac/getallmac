@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# Scan for active hosts using nmap
+nmap -sn 192.168.1.0/24 | grep -oP '\b(\d{1,3}\.){3}\d{1,3}\b' > ip_addresses.txt
+
+# Get MAC addresses using arp-scan
+arp-scan --localnet | grep -oP '\b([0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2}\b' > mac_addresses.txt
+
+# Combine IP and MAC addresses into a single file
+paste -d ' ' ip_addresses.txt mac_addresses.txt > combined_addresses.txt
+
+# Clean up temporary files
+rm ip_addresses.txt mac_addresses.txt
+
+echo "IP and MAC addresses have been collected and stored in combined_addresses.txt"
